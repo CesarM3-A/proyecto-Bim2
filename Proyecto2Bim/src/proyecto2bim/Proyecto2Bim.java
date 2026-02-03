@@ -17,26 +17,26 @@ public class Proyecto2Bim {
     /**
      * @param args the command line arguments
      */
-   public static void main(String[] args) {
+    public static void main(String[] args) {
 
         String nombre = Datos.obtenerNombre();
         int edad = Datos.obtenerEdad();
         double peso = Datos.obtenerPeso();
-        String sexo = Datos.obtenerSexo();
         double estatura = Datos.obtenerEstatura();
+        String sexo = Datos.obtenerSexo();
 
         double recomendacion = Funciones.obtenerRecomendacion(
-                edad, peso, estatura, sexo);
+                edad, peso, estatura, sexo
+        );
 
-        Object[] datosSemana = Funciones.registrarSemana();
-
-        String[][] nombres = (String[][]) datosSemana[0];
-        double[][] calorias = (double[][]) datosSemana[1];
+        
+        String[][] nombres = Funciones.registrarSemana();
+        double[][] calorias = Funciones.obtenerCaloriasSemana();
 
         double promedio = Funciones.obtenerPromedioSemanal(calorias);
         String comparacion = Funciones.compararDatos(promedio, recomendacion);
 
-        String reporteFinal = Reporte.generarReporteCompleto(
+        String reporte = Reporte.generarReporteCompleto(
                 nombre,
                 edad,
                 peso,
@@ -49,6 +49,6 @@ public class Proyecto2Bim {
                 calorias
         );
 
-        Reporte.imprimirReporte(reporteFinal);
+        Reporte.imprimirReporte(reporte);
     }
 }

@@ -10,7 +10,7 @@ package paquete04;
  */
 public class Reporte {
 
-     public static String generarReporteCompleto(
+    public static String generarReporteCompleto(
             String nombre,
             int edad,
             double peso,

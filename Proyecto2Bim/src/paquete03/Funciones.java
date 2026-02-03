@@ -14,6 +14,9 @@ public class Funciones {
 
     static Scanner entrada = new Scanner(System.in);
 
+    // Matriz simple para calorías (nivel principiante)
+    static double[][] caloriasSemana;
+
     public static double obtenerRecomendacion(int edad, double peso, double estatura, String sexo) {
         double estaturaCm = estatura * 100;
 
@@ -24,11 +27,11 @@ public class Funciones {
         }
     }
 
-    // REGISTRO DETALLADO DIA A DIA
-    public static Object[] registrarSemana() {
+    // FUNCIÓN: registra la semana y devuelve los nombres
+    public static String[][] registrarSemana() {
 
         String[][] nombres = new String[7][];
-        double[][] calorias = new double[7][];
+        caloriasSemana = new double[7][];
 
         for (int dia = 0; dia < 7; dia++) {
             System.out.printf("\n--- Día %d ---\n", dia + 1);
@@ -38,19 +41,24 @@ public class Funciones {
             entrada.nextLine();
 
             nombres[dia] = new String[cantidad];
-            calorias[dia] = new double[cantidad];
+            caloriasSemana[dia] = new double[cantidad];
 
             for (int i = 0; i < cantidad; i++) {
                 System.out.printf("Nombre del alimento %d: ", i + 1);
                 nombres[dia][i] = entrada.nextLine();
 
                 System.out.printf("Calorías de %s: ", nombres[dia][i]);
-                calorias[dia][i] = entrada.nextDouble();
+                caloriasSemana[dia][i] = entrada.nextDouble();
                 entrada.nextLine();
             }
         }
 
-        return new Object[]{nombres, calorias};
+        return nombres;
+    }
+
+    // FUNCIÓN que devuelve las calorías
+    public static double[][] obtenerCaloriasSemana() {
+        return caloriasSemana;
     }
 
     public static double obtenerPromedioSemanal(double[][] calorias) {
@@ -62,7 +70,7 @@ public class Funciones {
             }
         }
 
-        return suma / 7; // promedio diario semanal
+        return suma / 7;
     }
 
     public static String compararDatos(double promedio, double recomendacion) {
@@ -73,3 +81,4 @@ public class Funciones {
         }
     }
 }
+
