@@ -10,31 +10,7 @@ package paquete04;
  */
 public class Reporte {
 
-    public static String generarResumenSemanal(
-            int []registro,
-            double promedioSemanal) {
-
-        String resumen = "RESUMEN SEMANAL\n";
-
-        for (int i = 0; i < registro.length; i++) {
-            resumen = String.format(
-                    "%sDía %d: %d calorias\n",
-                    resumen,
-                    i + 1,
-                    registro[i]
-            );
-        }
-
-        resumen = String.format(
-                "%sPromedio semanal: %.2f calorias\n",
-                resumen,
-                promedioSemanal
-        );
-
-        return resumen;
-    }
-
-    public static void generarReporteFinal(
+     public static String generarReporteCompleto(
             String nombre,
             int edad,
             double peso,
@@ -43,41 +19,54 @@ public class Reporte {
             double recomendacion,
             double promedio,
             String comparacion,
-            String resumen) {
+            String[][] nombres,
+            double[][] calorias) {
 
         String reporte = "";
 
-        reporte += "CONTROL SEMANAL DE ALIMENTACION\n\n";
+        reporte += "CONTROL SEMANAL DE ALIMENTACIÓN\n\n";
 
-        reporte = String.format(
-                "%sDATOS DEL USUARIO\n"
-                + "Nombre: %s\n"
-                + "Edad: %d años\n"
-                + "Peso: %.2f kg\n"
-                + "Estatura: %.2f m\n"
-                + "Sexo: %s\n\n",
-                reporte,
-                nombre,
-                edad,
-                peso,
-                estatura,
-                sexo
+        reporte += String.format(
+                "DATOS DEL USUARIO\n" +
+                "Nombre: %s\n" +
+                "Edad: %d años\n" +
+                "Peso: %.2f kg\n" +
+                "Estatura: %.2f m\n" +
+                "Sexo: %s\n\n",
+                nombre, edad, peso, estatura, sexo
         );
 
-        reporte = String.format(
-                "%sRECOMENDACION CALORICA DIARIA: %.2f calorias\n\n",
-                reporte,
+        reporte += String.format(
+                "Recomendación calórica diaria: %.2f calorías\n\n",
                 recomendacion
         );
 
-        reporte = String.format("%s%s\n", reporte, resumen);
+        reporte += "RESUMEN SEMANAL\n";
 
-        reporte = String.format(
-                "%sANALISIS FINAL\n%s\n",
-                reporte,
-                comparacion
+        for (int d = 0; d < nombres.length; d++) {
+            reporte += String.format("\nDía %d:\n", d + 1);
+
+            for (int i = 0; i < nombres[d].length; i++) {
+                reporte += String.format(
+                        "%s: %.2f calorías\n",
+                        nombres[d][i],
+                        calorias[d][i]
+                );
+            }
+        }
+
+        reporte += String.format(
+                "\nPromedio semanal: %.2f calorías\n\n",
+                promedio
         );
 
+        reporte += "ANÁLISIS FINAL\n";
+        reporte += comparacion + "\n";
+
+        return reporte;
+    }
+
+    public static void imprimirReporte(String reporte) {
         System.out.printf("%s", reporte);
     }
 }

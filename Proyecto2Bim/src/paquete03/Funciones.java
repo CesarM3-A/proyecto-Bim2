@@ -14,91 +14,62 @@ public class Funciones {
 
     static Scanner entrada = new Scanner(System.in);
 
-    public static double obtenerRecomendacion(
-            int edad,
-            double peso,
-            double estatura,
-            String sexo) {
-
-        double recomendacion;
+    public static double obtenerRecomendacion(int edad, double peso, double estatura, String sexo) {
         double estaturaCm = estatura * 100;
 
         if (sexo.equals("M")) {
-            recomendacion = (10 * peso) + (6 * estaturaCm) - (5 * edad) + 5;
+            return (10 * peso) + (6 * estaturaCm) - (5 * edad) + 5;
         } else {
-            recomendacion = (10 * peso) + (6 * estaturaCm) - (5 * edad) - 161;
+            return (10 * peso) + (6 * estaturaCm) - (5 * edad) - 161;
         }
-
-        return recomendacion;
     }
 
-    public static int[] alimentosConsumidos() {
-        int[] registroSemanal = new int[7];
+    // REGISTRO DETALLADO DIA A DIA
+    public static Object[] registrarSemana() {
+
+        String[][] nombres = new String[7][];
+        double[][] calorias = new double[7][];
 
         for (int dia = 0; dia < 7; dia++) {
-            System.out.printf("\nDía %d\n", dia + 1);
+            System.out.printf("\n--- Día %d ---\n", dia + 1);
+
             System.out.print("¿Cuántos alimentos consumió hoy?: ");
-            int numeroAlimentos = entrada.nextInt();
+            int cantidad = entrada.nextInt();
             entrada.nextLine();
 
-            String[] nombres = nombreAlimento(numeroAlimentos);
-            int totalCalorias = obtenerCalorias(numeroAlimentos, nombres);
+            nombres[dia] = new String[cantidad];
+            calorias[dia] = new double[cantidad];
 
-            registroSemanal[dia] = totalCalorias;
+            for (int i = 0; i < cantidad; i++) {
+                System.out.printf("Nombre del alimento %d: ", i + 1);
+                nombres[dia][i] = entrada.nextLine();
+
+                System.out.printf("Calorías de %s: ", nombres[dia][i]);
+                calorias[dia][i] = entrada.nextDouble();
+                entrada.nextLine();
+            }
         }
 
-        return registroSemanal;
+        return new Object[]{nombres, calorias};
     }
 
-    public static String[] nombreAlimento(int cantidad) {
-        String[] alimentos = new String[cantidad];
+    public static double obtenerPromedioSemanal(double[][] calorias) {
+        double suma = 0;
 
-        for (int i = 0; i < cantidad; i++) {
-            System.out.printf("Ingrese nombre del alimento %d: ", i + 1);
-            alimentos[i] = entrada.nextLine();
+        for (int d = 0; d < calorias.length; d++) {
+            for (int i = 0; i < calorias[d].length; i++) {
+                suma += calorias[d][i];
+            }
         }
 
-        return alimentos;
+        return suma / 7; // promedio diario semanal
     }
 
-    public static int obtenerCalorias(int cantidad, String[] alimentos) {
-        int totalCalorias = 0;
-
-        for (int i = 0; i < cantidad; i++) {
-            System.out.printf("Ingrese calorías de %s: ", alimentos[i]);
-            int calorias = entrada.nextInt();
-            totalCalorias += calorias;
-        }
-        entrada.nextLine();
-
-        return totalCalorias;
-    }
-
-    public static double obtenerPromedioSemanal(int[] registro) {
-
-        int suma = 0;
-
-        for (int i = 0; i < registro.length; i++) {
-            suma += registro[i];
-        }
-
-        return (double) suma;
-    }
-
-    public static String compararDatos(
-            double promedioSemanal,
-            double recomendacionCaloricaDiaria) {
-
-        String mensaje;
-
-        if (promedioSemanal <= recomendacionCaloricaDiaria) {
-            mensaje
-                    = "Buen trabajo. En promedio cumples con tu recomendación calorica diaria.";
+    public static String compararDatos(double promedio, double recomendacion) {
+        if (promedio <= recomendacion) {
+            return "Buen trabajo. Cumples con tu recomendación calórica diaria.";
         } else {
-            mensaje
-                    = "Atencion. En promedio superas tu recomendación calorica diaria.";
+            return "Atención. Superas tu recomendación calórica diaria.";
         }
-
-        return mensaje;
     }
 }

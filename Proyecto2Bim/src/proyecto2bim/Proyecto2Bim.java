@@ -17,39 +17,38 @@ public class Proyecto2Bim {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+   public static void main(String[] args) {
 
-    String nombre = Datos.obtenerNombre();
-    int edad = Datos.obtenerEdad();
-    double peso = Datos.obtenerPeso();
-    String sexo = Datos.obtenerSexo();
-    double estatura = Datos.obtenerEstatura();
+        String nombre = Datos.obtenerNombre();
+        int edad = Datos.obtenerEdad();
+        double peso = Datos.obtenerPeso();
+        String sexo = Datos.obtenerSexo();
+        double estatura = Datos.obtenerEstatura();
 
-    double recomendacionCaloricaDiaria =
-            Funciones.obtenerRecomendacion(edad, peso, estatura, sexo);
+        double recomendacion = Funciones.obtenerRecomendacion(
+                edad, peso, estatura, sexo);
 
-    
-    int[] registroAlimentos = Funciones.alimentosConsumidos();
+        Object[] datosSemana = Funciones.registrarSemana();
 
-    double promedioSemanal =
-            Funciones.obtenerPromedioSemanal(registroAlimentos);
+        String[][] nombres = (String[][]) datosSemana[0];
+        double[][] calorias = (double[][]) datosSemana[1];
 
-    String comparacion =
-            Funciones.compararDatos(promedioSemanal, recomendacionCaloricaDiaria);
+        double promedio = Funciones.obtenerPromedioSemanal(calorias);
+        String comparacion = Funciones.compararDatos(promedio, recomendacion);
 
-    String resumenSemanal =
-            Reporte.generarResumenSemanal(registroAlimentos, promedioSemanal);
+        String reporteFinal = Reporte.generarReporteCompleto(
+                nombre,
+                edad,
+                peso,
+                estatura,
+                sexo,
+                recomendacion,
+                promedio,
+                comparacion,
+                nombres,
+                calorias
+        );
 
-    Reporte.generarReporteFinal(
-            nombre,
-            edad,
-            peso,
-            estatura,
-            sexo,
-            recomendacionCaloricaDiaria,
-            promedioSemanal,
-            comparacion,
-            resumenSemanal
-    );
-}
+        Reporte.imprimirReporte(reporteFinal);
+    }
 }

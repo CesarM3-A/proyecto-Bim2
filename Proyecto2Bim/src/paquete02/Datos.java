@@ -16,12 +16,9 @@ public class Datos {
 
     static Scanner entrada = new Scanner(System.in).useLocale(Locale.US);
 
-
     public static String obtenerNombre() {
-        String nombre;
         System.out.print("Ingrese su nombre: ");
-        nombre = entrada.nextLine();
-        return nombre;
+        return entrada.nextLine();
     }
 
     public static int obtenerEdad() {
