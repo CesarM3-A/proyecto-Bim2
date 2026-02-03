@@ -11,7 +11,7 @@ package paquete04;
 public class Reporte {
 
     public static String generarResumenSemanal(
-            int[] registro,
+            int []registro,
             double promedioSemanal) {
 
         String resumen = "RESUMEN SEMANAL\n";

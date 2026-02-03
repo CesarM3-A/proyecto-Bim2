@@ -19,34 +19,37 @@ public class Proyecto2Bim {
      */
     public static void main(String[] args) {
 
-        String nombre = Datos.obtenerNombre();
-        int edad = Datos.obtenerEdad();
-        double peso = Datos.obtenerPeso();
-        String sexo = Datos.obtenerSexo();
-        double estatura = Datos.obtenerEstatura();
+    String nombre = Datos.obtenerNombre();
+    int edad = Datos.obtenerEdad();
+    double peso = Datos.obtenerPeso();
+    String sexo = Datos.obtenerSexo();
+    double estatura = Datos.obtenerEstatura();
 
-        double recomendacionCaloricaDiaria
-                = Funciones.obtenerRecomendacion(edad, peso, estatura, sexo);
+    double recomendacionCaloricaDiaria =
+            Funciones.obtenerRecomendacion(edad, peso, estatura, sexo);
 
-        int[] alimentosConsumidos = Funciones.alimentosConsumidos();
+    
+    int[] registroAlimentos = Funciones.alimentosConsumidos();
 
-        for (int a = 0; a < 7; a++) {
-            String[] nombreAlimentos = Funciones.nombreAlimento(alimentosConsumidos[a]);
+    double promedioSemanal =
+            Funciones.obtenerPromedioSemanal(registroAlimentos);
 
-            int[] registroAlimentos = Funciones.obtenerRegistroSemanal(alimentosConsumidos[a], nombreAlimentos[a]);
+    String comparacion =
+            Funciones.compararDatos(promedioSemanal, recomendacionCaloricaDiaria);
 
-            double promedioSemanal
-                    = Funciones.obtenerPromedioSemanal(registroAlimentos);
+    String resumenSemanal =
+            Reporte.generarResumenSemanal(registroAlimentos, promedioSemanal);
 
-            String comparacion
-                    = Funciones.compararDatos(promedioSemanal, recomendacionCaloricaDiaria);
-
-            String resumenSemanal
-                    = Reporte.generarResumenSemanal(registroAlimentos, promedioSemanal);
-
-            Reporte.generarReporteFinal(nombre, edad, peso, estatura, sexo, recomendacionCaloricaDiaria,
-                    promedioSemanal, comparacion, resumenSemanal
-            );
-        }
-    }
+    Reporte.generarReporteFinal(
+            nombre,
+            edad,
+            peso,
+            estatura,
+            sexo,
+            recomendacionCaloricaDiaria,
+            promedioSemanal,
+            comparacion,
+            resumenSemanal
+    );
+}
 }
