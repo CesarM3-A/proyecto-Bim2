@@ -19,19 +19,28 @@ public class Proyecto2Bim {
      */
     public static void main(String[] args) {
 
+        
         String nombre = Datos.obtenerNombre();
         int edad = Datos.obtenerEdad();
         double peso = Datos.obtenerPeso();
         double estatura = Datos.obtenerEstatura();
         String sexo = Datos.obtenerSexo();
 
+       
         double recomendacion = Funciones.obtenerRecomendacion(
                 edad, peso, estatura, sexo
         );
 
-        
-        String[][] nombres = Funciones.registrarSemana();
-        double[][] calorias = Funciones.obtenerCaloriasSemana();
+        String[][] nombres = new String[7][];
+        double[][] calorias = new double[7][];
+
+        for (int dia = 0; dia < 7; dia++) {
+
+            int cantidad = Funciones.obtenerCantidadAlimentos(dia);
+
+            nombres[dia] = Funciones.obtenerNombresAlimentos(cantidad);
+            calorias[dia] = Funciones.obtenerCaloriasAlimentos(nombres[dia]);
+        }
 
         double promedio = Funciones.obtenerPromedioSemanal(calorias);
         String comparacion = Funciones.compararDatos(promedio, recomendacion);
@@ -51,4 +60,5 @@ public class Proyecto2Bim {
 
         Reporte.imprimirReporte(reporte);
     }
+
 }

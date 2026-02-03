@@ -14,9 +14,6 @@ public class Funciones {
 
     static Scanner entrada = new Scanner(System.in);
 
-    // Matriz simple para calorías (nivel principiante)
-    static double[][] caloriasSemana;
-
     public static double obtenerRecomendacion(int edad, double peso, double estatura, String sexo) {
         double estaturaCm = estatura * 100;
 
@@ -27,38 +24,36 @@ public class Funciones {
         }
     }
 
-    // FUNCIÓN: registra la semana y devuelve los nombres
-    public static String[][] registrarSemana() {
+    // 1️⃣ FUNCIÓN: cantidad de alimentos
+    public static int obtenerCantidadAlimentos(int dia) {
+        System.out.printf("\n--- Día %d ---\n", dia + 1);
+        System.out.print("¿Cuántos alimentos consumió hoy?: ");
+        return entrada.nextInt();
+    }
 
-        String[][] nombres = new String[7][];
-        caloriasSemana = new double[7][];
+    // 2️⃣ FUNCIÓN: nombres de alimentos
+    public static String[] obtenerNombresAlimentos(int cantidad) {
+        entrada.nextLine(); // limpiar buffer
+        String[] nombres = new String[cantidad];
 
-        for (int dia = 0; dia < 7; dia++) {
-            System.out.printf("\n--- Día %d ---\n", dia + 1);
-
-            System.out.print("¿Cuántos alimentos consumió hoy?: ");
-            int cantidad = entrada.nextInt();
-            entrada.nextLine();
-
-            nombres[dia] = new String[cantidad];
-            caloriasSemana[dia] = new double[cantidad];
-
-            for (int i = 0; i < cantidad; i++) {
-                System.out.printf("Nombre del alimento %d: ", i + 1);
-                nombres[dia][i] = entrada.nextLine();
-
-                System.out.printf("Calorías de %s: ", nombres[dia][i]);
-                caloriasSemana[dia][i] = entrada.nextDouble();
-                entrada.nextLine();
-            }
+        for (int i = 0; i < cantidad; i++) {
+            System.out.printf("Nombre del alimento %d: ", i + 1);
+            nombres[i] = entrada.nextLine();
         }
 
         return nombres;
     }
 
-    // FUNCIÓN que devuelve las calorías
-    public static double[][] obtenerCaloriasSemana() {
-        return caloriasSemana;
+    // 3️⃣ FUNCIÓN: calorías de alimentos
+    public static double[] obtenerCaloriasAlimentos(String[] nombres) {
+        double[] calorias = new double[nombres.length];
+
+        for (int i = 0; i < nombres.length; i++) {
+            System.out.printf("Calorías de %s: ", nombres[i]);
+            calorias[i] = entrada.nextDouble();
+        }
+
+        return calorias;
     }
 
     public static double obtenerPromedioSemanal(double[][] calorias) {
